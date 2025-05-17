@@ -55,19 +55,19 @@ const Parking: React.FC = () => {
             <Table>
               <TableHead>
                 <TableRow>
+                  <TableCell>Address</TableCell>
                   <TableCell>Capacity</TableCell>
                   <TableCell>Longitude</TableCell>
                   <TableCell>Latitude</TableCell>
-                  <TableCell>Address</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {parkings.map((p) => (
                   <TableRow key={p._id}>
+                    <TableCell>{p.address}</TableCell>
                     <TableCell>{p.capacity}</TableCell>
                     <TableCell>{p.location.coordinates[0]}</TableCell>
                     <TableCell>{p.location.coordinates[1]}</TableCell>
-                    <TableCell>{p.address}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
