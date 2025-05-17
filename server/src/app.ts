@@ -7,10 +7,20 @@ import mongoose from "mongoose";
 
 const app = express();
 
-app.use(cors({
-  origin: ["http://localhost:3000"],  // allow local React dev
-  credentials: true
-}));
+const allowedOrigins = ["http://localhost:3000"];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
