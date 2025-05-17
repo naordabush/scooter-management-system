@@ -5,22 +5,31 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 
-import scooterRoutes from "./routes/scooter.routes";
-import userRoutes from "./routes/user.routes";
-import parkingRoutes from "./routes/parking.routes";
-import failureRoutes from "./routes/failure.routes";
-
 const app = express();
 
-// Allow requests from your frontend
+const allowedOrigins = [
+  "http://localhost:3000"
+];
+
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   })
 );
 
 app.use(express.json());
+
+import scooterRoutes from "./routes/scooter.routes";
+import userRoutes from "./routes/user.routes";
+import parkingRoutes from "./routes/parking.routes";
+import failureRoutes from "./routes/failure.routes";
 
 app.use("/api/scooters", scooterRoutes);
 app.use("/api/users", userRoutes);
